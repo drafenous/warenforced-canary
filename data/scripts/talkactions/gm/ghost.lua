@@ -13,7 +13,6 @@ function ghost.onSay(player, words, param)
         position:sendMagicEffect(CONST_ME_YALAHARIGHOST)
     else
         player:sendTextMessage(MESSAGE_HOTKEY_PRESSED, "You are visible again.")
-        position.x = position.x + 1
         position:sendMagicEffect(CONST_ME_AVATAR_APPEAR)
     end
     return true

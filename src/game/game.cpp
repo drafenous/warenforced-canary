@@ -373,6 +373,7 @@ Game::Game() {
 		{ static_cast<uint8_t>(EMBRACE_OF_TIBIA), "The Embrace of Tibia" },
 		{ static_cast<uint8_t>(BLOOD_OF_THE_MOUNTAIN), "Blood of the Mountain" },
 		{ static_cast<uint8_t>(HEARTH_OF_THE_MOUNTAIN), "Heart of the Mountain" },
+		{ static_cast<uint8_t>(BLESSING_OF_LIFE), "The Blessing of Life" },
 	};
 
 	m_summaryCategories = {

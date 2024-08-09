@@ -76110,9 +76110,9 @@ Granted by TibiaGoals.com"/>
 			<attribute key="vocation" value="Sorcerer;true, Master Sorcerer"/>
 		</attribute>
 	</item>
-	<item id="44780" article="a" name="Voodoo of Life">
+	<item id="99999" article="a" name="Voodoo of Life">
 		<attribute key="primarytype" value="dolls and bears"/>
-		<attribute key="description" value="Used by ghosts to revive."/>
+		<attribute key="description" value="Brings you or a loved one back from the dead."/>
 		<attribute key="weight" value="650"/>
 	</item>
 </items>

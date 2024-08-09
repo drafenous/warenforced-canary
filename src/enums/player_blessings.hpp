@@ -21,5 +21,6 @@ enum class Blessings : uint8_t {
 	TheSpiritualShielding = 5,
 	TheEmbraceOfTibia = 6,
 	BloodOfTheMountain = 7,
-	HearthOfTheMountain = 8
+	HearthOfTheMountain = 8,
+	TheBlessingOfLife = 9
 };

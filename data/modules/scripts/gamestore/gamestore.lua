@@ -68,7 +68,7 @@ GameStore.Categories = { -- WAR Enforced Offers
         home = true,
     }, {
         icons = {"Voodoo_Doll.png"},
-        name = "The Bless of Life",
+        name = "The Blessing of Life",
         price = 250,
         id = GameStore.SubActions.BLESSING_OF_LIFE,
         blessid = 9,
@@ -78,7 +78,7 @@ GameStore.Categories = { -- WAR Enforced Offers
         home = true
     }, {
         icons = {"Voodoo_Doll.png"},
-        name = "The Bless of Life",
+        name = "The Blessing of Life",
         price = 1000,
         blessid = 9,
         count = 5,

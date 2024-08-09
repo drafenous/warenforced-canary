@@ -44,5 +44,5 @@ function voodooOfLife.onUse(player, item, fromPosition, target, toPosition, isHo
     return true
 end
 
-voodooOfLife:id(44780)
+voodooOfLife:id(49279)
 voodooOfLife:register()

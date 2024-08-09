@@ -111,6 +111,7 @@ enum Blessings_t : uint8_t {
 	EMBRACE_OF_TIBIA = 6,
 	BLOOD_OF_THE_MOUNTAIN = 7,
 	HEARTH_OF_THE_MOUNTAIN = 8,
+	BLESSING_OF_LIFE = 9
 };
 
 enum HighscoreType_t : uint8_t {

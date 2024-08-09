@@ -38,23 +38,23 @@ GameStore.OfferTypes = {
 }
 
 GameStore.SubActions = {
-    PREY_THIRDSLOT_REAL = 0,
-    PREY_WILDCARD = 1,
-    INSTANT_REWARD = 2,
-    BLESSING_TWIST = 3,
-    BLESSING_SOLITUDE = 4,
-    BLESSING_PHOENIX = 5,
-    BLESSING_SUNS = 6,
-    BLESSING_SPIRITUAL = 7,
-    BLESSING_EMBRACE = 8,
-    BLESSING_HEART = 9,
-    BLESSING_BLOOD = 10,
-    BLESSING_ALL_PVE = 11,
-    BLESSING_ALL_PVP = 12,
-    CHARM_EXPANSION = 13,
-    TASKHUNTING_THIRDSLOT = 14,
-    PREY_THIRDSLOT_REDIRECT = 15,
-    BLESSING_OF_LIFE = 16
+	PREY_THIRDSLOT_REAL = 0,
+	PREY_WILDCARD = 1,
+	INSTANT_REWARD = 2,
+	BLESSING_TWIST = 3,
+	BLESSING_SOLITUDE = 4,
+	BLESSING_PHOENIX = 5,
+	BLESSING_SUNS = 6,
+	BLESSING_SPIRITUAL = 7,
+	BLESSING_EMBRACE = 8,
+	BLESSING_BLOOD = 9,
+	BLESSING_HEART = 10,
+	BLESSING_ALL_PVE = 11,
+	BLESSING_ALL_PVP = 12,
+	CHARM_EXPANSION = 13,
+	TASKHUNTING_THIRDSLOT = 14,
+	PREY_THIRDSLOT_REDIRECT = 15,
+	BLESSING_OF_LIFE = 16
 }
 
 GameStore.ActionType = {
@@ -410,6 +410,17 @@ function parseRequestStoreOffers(playerId, msg)
     player:updateUIExhausted()
 end
 
+-- Used on cyclopedia store summary
+local function insertPlayerTransactionSummary(player, offer)
+	local id = offer.id
+	if offer.type == GameStore.OfferTypes.OFFER_TYPE_HOUSE then
+		id = offer.itemtype
+	elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_BLESSINGS then
+		id = offer.blessid
+	end
+	player:createTransactionSummary(offer.type, math.max(1, offer.count or 1), id)
+end
+
 function parseBuyStoreOffer(playerId, msg)
     local player = Player(playerId)
     local id = msg:getU32()
@@ -453,76 +464,65 @@ function parseBuyStoreOffer(playerId, msg)
             queueSendStoreAlertToUser("You don't have enough coins. Your purchase has been cancelled.", 250, playerId)
     end
 
-    -- Use pcall to catch unhandled errors and send an alert to the user because the client expects it at all times; (OTClient will unlock UI)
-    -- Handled errors are thrown to indicate that the purchase has failed;
-    -- Handled errors have a code index and unhandled errors do not
-    local pcallOk, pcallError = pcall(function()
-        if offer.type == GameStore.OfferTypes.OFFER_TYPE_ITEM then
-            GameStore.processItemPurchase(player, offer.itemtype, offer.count or 1, offer.movable, offer.setOwner)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_ITEM_UNIQUE then
-            GameStore.processItemPurchase(player, offer.itemtype, offer.count or 1, offer.movable, offer.setOwner)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_INSTANT_REWARD_ACCESS then
-            GameStore.processInstantRewardAccess(player, offer.count)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_CHARMS then
-            GameStore.processCharmsPurchase(player)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_BLESSINGS then
-            GameStore.processSingleBlessingPurchase(player, offer.blessid, offer.count)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_ALLBLESSINGS then
-            GameStore.processAllBlessingsPurchase(player, offer.count)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_PREMIUM then
-            GameStore.processPremiumPurchase(player, offer.id)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_STACKABLE then
-            GameStore.processStackablePurchase(player, offer.itemtype, offer.count, offer.name, offer.movable,
-                offer.setOwner)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HOUSE then
-            GameStore.processHouseRelatedPurchase(player, offer)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_OUTFIT then
-            GameStore.processOutfitPurchase(player, offer.sexId, offer.addon)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_OUTFIT_ADDON then
-            GameStore.processOutfitPurchase(player, offer.sexId, offer.addon)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_MOUNT then
-            GameStore.processMountPurchase(player, offer.id)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_NAMECHANGE then
-            local newName = msg:getString()
-            GameStore.processNameChangePurchase(player, offer, productType, newName)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_SEXCHANGE then
-            GameStore.processSexChangePurchase(player)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_EXPBOOST then
-            GameStore.processExpBoostPurchase(player)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HUNTINGSLOT then
-            GameStore.processTaskHuntingThirdSlot(player)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_PREYSLOT then
-            GameStore.processPreyThirdSlot(player)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_PREYBONUS then
-            GameStore.processPreyBonusReroll(player, offer.count)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_TEMPLE then
-            GameStore.processTempleTeleportPurchase(player)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_CHARGES then
-            GameStore.processChargesPurchase(player, offer.itemtype, offer.name, offer.charges, offer.movable,
-                offer.setOwner)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING then
-            local hirelingName = msg:getString()
-            local sex = msg:getByte()
-            GameStore.processHirelingPurchase(player, offer, productType, hirelingName, sex)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_NAMECHANGE then
-            local hirelingName = msg:getString()
-            GameStore.processHirelingChangeNamePurchase(player, offer, productType, hirelingName)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_SEXCHANGE then
-            GameStore.processHirelingChangeSexPurchase(player, offer)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_SKILL then
-            GameStore.processHirelingSkillPurchase(player, offer)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_OUTFIT then
-            GameStore.processHirelingOutfitPurchase(player, offer)
-        elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_ITEM_BED then
-            GameStore.processHouseRelatedPurchase(player, offer)
-        else
-            -- This should never happen by our convention, but just in case the guarding condition is messed up...
-            error({
-                code = 0,
-                message = "This offer is unavailable [2]"
-            })
-        end
-    end)
+	-- Use pcall to catch unhandled errors and send an alert to the user because the client expects it at all times; (OTClient will unlock UI)
+	-- Handled errors are thrown to indicate that the purchase has failed;
+	-- Handled errors have a code index and unhandled errors do not
+	local pcallOk, pcallError = pcall(function()
+		if offer.type == GameStore.OfferTypes.OFFER_TYPE_ITEM or offer.type == GameStore.OfferTypes.OFFER_TYPE_ITEM_UNIQUE then
+			GameStore.processItemPurchase(player, offer.itemtype, offer.count or 1, offer.movable, offer.setOwner)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_INSTANT_REWARD_ACCESS then
+			GameStore.processInstantRewardAccess(player, offer.count)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_CHARMS then
+			GameStore.processCharmsPurchase(player)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_BLESSINGS then
+			GameStore.processSingleBlessingPurchase(player, offer.blessid, offer.count)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_ALLBLESSINGS then
+			GameStore.processAllBlessingsPurchase(player, offer.count)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_PREMIUM then
+			GameStore.processPremiumPurchase(player, offer.id)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_STACKABLE then
+			GameStore.processStackablePurchase(player, offer.itemtype, offer.count, offer.name, offer.movable, offer.setOwner)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HOUSE or offer.type == GameStore.OfferTypes.OFFER_TYPE_ITEM_BED then
+			GameStore.processHouseRelatedPurchase(player, offer)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_OUTFIT or offer.type == GameStore.OfferTypes.OFFER_TYPE_OUTFIT_ADDON then
+			GameStore.processOutfitPurchase(player, offer.sexId, offer.addon)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_MOUNT then
+			GameStore.processMountPurchase(player, offer.id)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_NAMECHANGE then
+			local newName = msg:getString()
+			GameStore.processNameChangePurchase(player, offer, productType, newName)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_SEXCHANGE then
+			GameStore.processSexChangePurchase(player)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_EXPBOOST then
+			GameStore.processExpBoostPurchase(player)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HUNTINGSLOT then
+			GameStore.processTaskHuntingThirdSlot(player)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_PREYSLOT then
+			GameStore.processPreyThirdSlot(player)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_PREYBONUS then
+			GameStore.processPreyBonusReroll(player, offer.count)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_TEMPLE then
+			GameStore.processTempleTeleportPurchase(player)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_CHARGES then
+			GameStore.processChargesPurchase(player, offer.itemtype, offer.name, offer.charges, offer.movable, offer.setOwner)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING then
+			local hirelingName = msg:getString()
+			local sex = msg:getByte()
+			GameStore.processHirelingPurchase(player, offer, productType, hirelingName, sex)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_NAMECHANGE then
+			local hirelingName = msg:getString()
+			GameStore.processHirelingChangeNamePurchase(player, offer, productType, hirelingName)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_SEXCHANGE then
+			GameStore.processHirelingChangeSexPurchase(player, offer)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_SKILL then
+			GameStore.processHirelingSkillPurchase(player, offer)
+		elseif offer.type == GameStore.OfferTypes.OFFER_TYPE_HIRELING_OUTFIT then
+			GameStore.processHirelingOutfitPurchase(player, offer)
+		else
+			-- This should never happen by our convention, but just in case the guarding condition is messed up...
+			error({ code = 0, message = "This offer is unavailable [2]" })
+		end
+	end)
 
     if not pcallOk then
         local alertMessage = pcallError.code and pcallError.message or
@@ -537,11 +537,14 @@ function parseBuyStoreOffer(playerId, msg)
         return queueSendStoreAlertToUser(alertMessage, 500, playerId)
     end
 
-    local configure = useOfferConfigure(offer.type)
-    if configure ~= GameStore.ConfigureOffers.SHOW_CONFIGURE then
-        if not player:makeCoinTransaction(offer) then
-            return player:showInfoModal("Error", "Purchase transaction error")
-        end
+	if table.contains({ GameStore.OfferTypes.OFFER_TYPE_HOUSE, GameStore.OfferTypes.OFFER_TYPE_EXPBOOST, GameStore.OfferTypes.OFFER_TYPE_PREYBONUS, GameStore.OfferTypes.OFFER_TYPE_BLESSINGS, GameStore.OfferTypes.OFFER_TYPE_ALLBLESSINGS, GameStore.OfferTypes.OFFER_TYPE_INSTANT_REWARD_ACCESS }, offer.type) then
+		insertPlayerTransactionSummary(player, offer)
+	end
+	local configure = useOfferConfigure(offer.type)
+	if configure ~= GameStore.ConfigureOffers.SHOW_CONFIGURE then
+		if not player:makeCoinTransaction(offer) then
+			return player:showInfoModal("Error", "Purchase transaction error")
+		end
 
         local message = string.format("You have purchased %s for %d coins.", offer.name, offerPrice)
         sendUpdatedStoreBalances(playerId)
@@ -564,6 +567,26 @@ function parseRequestTransactionHistory(playerId, msg)
     local page = msg:getU32()
     sendStoreTransactionHistory(playerId, page + 1, GameStore.DefaultValues.DEFAULT_VALUE_ENTRIES_PER_PAGE)
     player:updateUIExhausted()
+	local player = Player(playerId)
+	if not player then
+		return
+	end
+
+	local page = 1
+	GameStore.DefaultValues.DEFAULT_VALUE_ENTRIES_PER_PAGE = msg:getByte()
+	sendStoreTransactionHistory(playerId, page, GameStore.DefaultValues.DEFAULT_VALUE_ENTRIES_PER_PAGE)
+	player:updateUIExhausted()
+end
+
+function parseRequestTransactionHistory(playerId, msg)
+	local player = Player(playerId)
+	if not player then
+		return
+	end
+
+	local page = msg:getU32()
+	sendStoreTransactionHistory(playerId, page + 1, GameStore.DefaultValues.DEFAULT_VALUE_ENTRIES_PER_PAGE)
+	player:updateUIExhausted()
 end
 
 local function getCategoriesRook()
@@ -1915,22 +1938,19 @@ function GameStore.processHirelingPurchase(player, offer, productType, hirelingN
             })
         end
 
-        player:makeCoinTransaction(offer, hirelingName)
-        local message = "You have successfully bought " .. hirelingName
-        return addPlayerEvent(sendStorePurchaseSuccessful, 650, player:getId(), message)
-        -- If not, we ask him to do!
-    else
-        if player:getHirelingsCount() >= GameStore.ItemLimit.HIRELING then
-            return error({
-                code = 1,
-                message = "You cannot have more than " .. GameStore.ItemLimit.HIRELING .. " hirelings."
-            })
-        end
-        -- TODO: Use the correct dialog (byte 0xDB) on client 1205+
-        -- for compatibility, request name using the change name dialog
-        return addPlayerEvent(sendRequestPurchaseData, 250, player:getId(), offer.id,
-            GameStore.ClientOfferTypes.CLIENT_STORE_OFFER_HIRELING)
-    end
+		player:makeCoinTransaction(offer, hirelingName)
+		local message = "You have successfully bought " .. hirelingName
+		player:createTransactionSummary(offer.type, 1)
+		return addPlayerEvent(sendStorePurchaseSuccessful, 650, player:getId(), message)
+		-- If not, we ask him to do!
+	else
+		if player:getHirelingsCount() >= GameStore.ItemLimit.HIRELING then
+			return error({ code = 1, message = "You cannot have more than " .. GameStore.ItemLimit.HIRELING .. " hirelings." })
+		end
+		-- TODO: Use the correct dialog (byte 0xDB) on client 1205+
+		-- for compatibility, request name using the change name dialog
+		return addPlayerEvent(sendRequestPurchaseData, 250, player:getId(), offer.id, GameStore.ClientOfferTypes.CLIENT_STORE_OFFER_HIRELING)
+	end
 end
 
 -- Hireling Helpers

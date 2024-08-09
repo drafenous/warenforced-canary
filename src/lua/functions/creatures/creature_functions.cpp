@@ -793,7 +793,7 @@ int CreatureFunctions::luaCreatureTeleportTo(lua_State* L) {
 
 	const Position oldPosition = creature->getPosition();
 	if (auto ret = g_game().internalTeleport(creature, position, pushMovement);
-		ret != RETURNVALUE_NOERROR) {
+	    ret != RETURNVALUE_NOERROR) {
 		g_logger().debug("[{}] Failed to teleport creature {}, on position {}, error code: {}", __FUNCTION__, creature->getName(), oldPosition.toString(), getReturnMessage(ret));
 		pushBoolean(L, false);
 		return 1;
@@ -938,7 +938,7 @@ int CreatureFunctions::luaCreatureGetPathTo(lua_State* L) {
 	fpp.clearSight = getBoolean(L, 6, fpp.clearSight);
 	fpp.maxSearchDist = getNumber<int32_t>(L, 7, fpp.maxSearchDist);
 
-	stdext::arraylist<Direction> dirList(128);
+	std::vector<Direction> dirList;
 	if (creature->getPathTo(position, dirList, fpp)) {
 		lua_newtable(L);
 

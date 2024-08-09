@@ -302,9 +302,9 @@ bool IOLoginDataSave::savePlayerFirst(std::shared_ptr<Player> player) {
 		query << "`onlinetime` = `onlinetime` + " << std::chrono::duration_cast<std::chrono::seconds>(now - lastLoginSaved).count() << ",";
 	}
 
-	for (int i = 1; i <= 8; i++) {
+	for (int i = 1; i <= 9; i++) {
 		query << "`blessings" << i << "`"
-			  << " = " << static_cast<uint32_t>(player->getBlessingCount(static_cast<uint8_t>(i))) << ((i == 8) ? " " : ",");
+			  << " = " << static_cast<uint32_t>(player->getBlessingCount(static_cast<uint8_t>(i))) << ((i == 9) ? " " : ",");
 	}
 	query << " WHERE `id` = " << player->getGUID();
 

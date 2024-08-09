@@ -5898,12 +5898,26 @@ void Game::playerRequestOutfit(uint32_t playerId) {
 		return;
 	}
 
+	if (player->hasFlag(PlayerFlags_t::CannotChangeOutfit)) {
+		player->sendTextMessage(MESSAGE_FAILURE, "You cannot change outfit.");
+		return;
+	}
+
 	player->sendOutfitWindow();
 }
 
 void Game::playerToggleMount(uint32_t playerId, bool mount) {
 	std::shared_ptr<Player> player = getPlayerByID(playerId);
 	if (!player) {
+		return;
+	}
+
+	if (player->hasFlag(PlayerFlags_t::CannotMount)) {
+		if(player->isMounted()) {
+			player->sendTextMessage(MESSAGE_FAILURE, "You cannot mount.");
+		} else {
+			player->sendTextMessage(MESSAGE_FAILURE, "You cannot dismount.");
+		}
 		return;
 	}
 
@@ -5920,6 +5934,11 @@ void Game::playerChangeOutfit(uint32_t playerId, Outfit_t outfit, uint8_t isMoun
 		return;
 	}
 
+	if (player->hasFlag(PlayerFlags_t::CannotChangeOutfit)) {
+		player->sendTextMessage(MESSAGE_FAILURE, "You cannot change outfit.");
+		return;
+	}
+
 	player->setRandomMount(isMountRandomized);
 
 	if (isMountRandomized && outfit.lookMount != 0 && player->hasAnyMount()) {
@@ -5933,6 +5952,12 @@ void Game::playerChangeOutfit(uint32_t playerId, Outfit_t outfit, uint8_t isMoun
 	}
 
 	if (outfit.lookMount != 0) {
+		if (player->hasFlag(PlayerFlags_t::CannotMount)) {
+			player->sendTextMessage(MESSAGE_FAILURE, "You cannot mount.");
+			player->dismount();
+			return;
+		}
+
 		const auto mount = mounts.getMountByClientID(outfit.lookMount);
 		if (!mount) {
 			return;

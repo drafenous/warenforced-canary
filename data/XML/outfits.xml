@@ -233,4 +233,7 @@
 	<outfit type="1" looktype="1662" name="Decaying Defender" premium="yes" unlocked="no" enabled="yes" from="quest" />
 	<outfit type="1" looktype="1675" name="Darklight Evoker" premium="no" unlocked="no" enabled="yes" from="store" />
 	<outfit type="1" looktype="1680" name="Flamefury Mage" premium="no" unlocked="no" enabled="yes" from="store" />
+
+	<!-- GOD, GM, CM... -->
+	<outfit type="2" looktype="75" name="Gamemaster" premium="no" unlocked="yes" enabled="yes" />
 </outfits>

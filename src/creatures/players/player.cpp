@@ -643,6 +643,7 @@ phmap::flat_hash_map<Blessings_t, std::string> Player::getBlessingNames() const 
 		{ EMBRACE_OF_TIBIA, "The Embrace of Tibia" },
 		{ BLOOD_OF_THE_MOUNTAIN, "Blood of the Mountain" },
 		{ HEARTH_OF_THE_MOUNTAIN, "Heart of the Mountain" },
+		{ BLESSING_OF_LIFE, "The Bless of Life" },
 	};
 	return blessingNames;
 }
@@ -2868,7 +2869,7 @@ void Player::death(std::shared_ptr<Creature> lastHitCreature) {
 						  : blessOutput << "You were blessed with " << bless;
 
 			// Make player lose bless
-			uint8_t maxBlessing = 8;
+			uint8_t maxBlessing = 9;
 			if (pvpDeath && hasBlessing(1)) {
 				removeBlessing(1, 1); // Remove TOF only
 			} else {
@@ -6614,7 +6615,7 @@ std::string Player::getBlessingsName() const {
 
 	auto BlessingNames = getBlessingNames();
 	std::ostringstream os;
-	for (uint8_t i = 1; i <= 8; i++) {
+	for (uint8_t i = 1; i <= 9; i++) {
 		if (hasBlessing(i)) {
 			if (auto blessName = BlessingNames.find(static_cast<Blessings_t>(i));
 				blessName != BlessingNames.end()) {

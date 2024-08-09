@@ -85,6 +85,10 @@ end
 
 function Creature:onChangeOutfit(outfit)
 	if self:isPlayer() then
+		if self:getGroup():getId() == GROUP_TYPE_NONE then
+			self:sendTextMessage(MESSAGE_FAILURE, "You are dead, you dont use any outfit!")
+			return false
+		end
 		local familiarLookType = self:getFamiliarLooktype()
 		if familiarLookType ~= 0 then
 			for _, summon in pairs(self:getSummons()) do

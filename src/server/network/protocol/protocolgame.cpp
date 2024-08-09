@@ -4230,7 +4230,7 @@ void ProtocolGame::sendBlessStatus() {
 	uint8_t blessCount = 0;
 	uint16_t flag = 0;
 	uint16_t pow2 = 2;
-	for (int i = 1; i <= 8; i++) {
+	for (int i = 1; i <= 9; i++) {
 		if (player->hasBlessing(i)) {
 			if (i > 1) {
 				blessCount++;

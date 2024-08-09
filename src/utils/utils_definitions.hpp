@@ -704,6 +704,8 @@ enum class PlayerFlags_t : uint8_t {
 	IsAlwaysPremium,
 	CanMapClickTeleport,
 	IgnoredByNpcs,
+	CannotChangeOutfit,
+	CannotMount,
 
 	// Must always be the last
 	FlagLast
@@ -718,6 +720,7 @@ enum Blessings_t : uint8_t {
 	EMBRACE_OF_TIBIA = 6,
 	BLOOD_OF_THE_MOUNTAIN = 7,
 	HEARTH_OF_THE_MOUNTAIN = 8,
+	BLESSING_OF_LIFE = 9,
 };
 
 enum BedItemPart_t : uint8_t {

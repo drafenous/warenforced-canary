@@ -25,7 +25,7 @@ Blessings.Config = {
 	InquisitonBlessPriceMultiplier = 1.1, -- Bless price multiplied by henricus
 	SkulledDeathLoseStoreItem = configManager.getBoolean(configKeys.SKULLED_DEATH_LOSE_STORE_ITEM), -- Destroy all items on store when dying with red/blackskull
 	InventoryGlowOnFiveBless = configManager.getBoolean(configKeys.INVENTORY_GLOW), -- Glow in yellow inventory items when the player has 5 or more bless,
-	Debug = false, -- Prin debug messages in console if enabled
+	Debug = true, -- Prin debug messages in console if enabled
 }
 
 dofile(CORE_DIRECTORY .. "/modules/scripts/blessings/assets.lua")

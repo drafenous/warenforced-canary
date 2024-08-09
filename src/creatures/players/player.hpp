@@ -459,6 +459,7 @@ public:
 	void setImbuingItem(std::shared_ptr<Item> item);
 
 	void addBlessing(uint8_t index, uint8_t count) {
+
 		if (blessings[index - 1] == 255) {
 			return;
 		}
@@ -2860,7 +2861,7 @@ private:
 
 	uint16_t lastStatsTrainingTime = 0;
 	uint16_t staminaMinutes = 2520;
-	std::vector<uint8_t> blessings = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	std::vector<uint8_t> blessings = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	uint16_t maxWriteLen = 0;
 	uint16_t baseXpGain = 100;
 	uint16_t voucherXpBoost = 0;

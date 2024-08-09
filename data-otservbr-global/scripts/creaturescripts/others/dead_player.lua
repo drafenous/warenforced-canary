@@ -1,0 +1,33 @@
+-- local deadPlayer = CreatureEvent("DeadPlayer")
+-- function deadPlayer.onDeath(player)
+--     local playerGuid = player:getGuid()
+--     local resultDead = db.storeQuery("SELECT `player_id`, `level` FROM `player_deaths` WHERE `player_id` = " ..
+--                                          playerGuid)
+--     local playerDeathLevel = Result.getNumber(resultDead, "level")
+--     local protectionLevel = getConfigInfo("protectionLevel")
+--     local isDead = false
+--     if resultDead ~= false and playerDeathLevel > protectionLevel then
+--         isDead = true
+--     end
+--     if isDead == true then
+--         local home = getHouseByPlayerGUID(getPlayerGUID(player))
+--         player:setGroup(Group(GROUP_TYPE_NONE))
+--         player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT, "You are dead.")
+--         player:setOutfit({
+--             lookType = 48,
+--             lookFeet = 255,
+--             lookLegs = 255,
+--             lookHead = 255,
+--             lookAddons = 0
+--         })
+--         if home then
+--             setHouseOwner(home, 0)
+--             player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT, "You've lost your house because you are dead.")
+--             player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT, "Your items from house are send to your inbox.")
+--         end
+--         player:save()
+--         Result.free(resultDead)
+--     end
+--     return true
+-- end
+-- deadPlayer:register()

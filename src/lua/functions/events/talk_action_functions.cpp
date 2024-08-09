@@ -62,7 +62,9 @@ int TalkActionFunctions::luaTalkActionGroupType(lua_State* L) {
 		groupType = enumFromValue<GroupType>(getNumber<uint8_t>(L, 2));
 	} else if (type == LUA_TSTRING) {
 		std::string strValue = getString(L, 2);
-		if (strValue == "normal") {
+		if (strValue == "none") {
+			groupType = GROUP_TYPE_NONE;
+		} else if (strValue == "normal") {
 			groupType = GROUP_TYPE_NORMAL;
 		} else if (strValue == "tutor") {
 			groupType = GROUP_TYPE_TUTOR;

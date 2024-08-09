@@ -223,6 +223,7 @@ void LuaEnums::initAccountEnums(lua_State* L) {
 	registerEnum(L, ACCOUNT_TYPE_GAMEMASTER);
 	registerEnum(L, ACCOUNT_TYPE_GOD);
 
+	registerEnum(L, GROUP_TYPE_NONE);
 	registerEnum(L, GROUP_TYPE_NORMAL);
 	registerEnum(L, GROUP_TYPE_TUTOR);
 	registerEnum(L, GROUP_TYPE_SENIORTUTOR);

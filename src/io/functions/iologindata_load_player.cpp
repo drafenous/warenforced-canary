@@ -214,7 +214,7 @@ void IOLoginDataLoad::loadPlayerBlessings(std::shared_ptr<Player> player, DBResu
 		return;
 	}
 
-	for (int i = 1; i <= 8; i++) {
+	for (int i = 1; i <= 9; i++) {
 		std::ostringstream ss;
 		ss << "blessings" << i;
 		player->addBlessing(static_cast<uint8_t>(i), static_cast<uint8_t>(result->getNumber<uint16_t>(ss.str())));

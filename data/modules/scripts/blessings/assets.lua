@@ -2,6 +2,7 @@ Blessings.Types = {
 	REGULAR = 1,
 	ENHANCED = 2,
 	PvP = 3,
+	CUSTOM = 4
 }
 
 Blessings.All = {
@@ -13,7 +14,7 @@ Blessings.All = {
 	[6] = { id = 6, name = "The Embrace of Tibia", charm = 10342, type = Blessings.Types.REGULAR, losscount = true, inquisition = true },
 	[7] = { id = 7, name = "Blood of the Mountain", charm = 25360, type = Blessings.Types.ENHANCED, losscount = true, inquisition = false },
 	[8] = { id = 8, name = "Heart of the Mountain", charm = 25361, type = Blessings.Types.ENHANCED, losscount = true, inquisition = false },
-	[9] = { id = 9, name = "The Blessing of Life", type = Blessings.Types.REGULAR, losscount = true, inquisition = false },
+	[9] = { id = 9, name = "The Blessing of Life", type = Blessings.Types.CUSTOM, losscount = true, inquisition = false },
 }
 
 Blessings.LossPercent = {

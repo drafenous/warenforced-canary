@@ -101,7 +101,7 @@ ChestUnique = {
 		storage = Storage.Quest.Key.ID4055,
 	},
 	-- Dawnport quest key 0010 chest
-	[0010] = {
+	[5002] = {
 		isKey = true,
 		itemId = 2434,
 		itemPos = { x = 32068, y = 31895, z = 3 },

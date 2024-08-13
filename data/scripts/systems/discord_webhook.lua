@@ -4,11 +4,11 @@
 
 if not announcementChannels then
 	announcementChannels = {
-		["serverAnnouncements"] = "", -- Used for an announcement channel on your discord
-		["raids"] = "", -- Used to isolate raids on your discord
-		["player-kills"] = "", -- Self-explaining
-		["player-levels"] = "", -- Self-explaining
-		["reports"] = "",
+		["serverAnnouncements"] = "server-announcements", -- Used for an announcement channel on your discord
+		["raids"] = "raids", -- Used to isolate raids on your discord
+		["player-kills"] = "player-kills", -- Self-explaining
+		["player-levels"] = "player-levels", -- Self-explaining
+		["reports"] = "reports",
 	}
 end
 

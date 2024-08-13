@@ -10,7 +10,7 @@ function ghost.onSay(player, words, param)
     player:setGhostMode(isGhost)
     if isGhost then
         player:sendTextMessage(MESSAGE_HOTKEY_PRESSED, "You are now invisible.")
-        position:sendMagicEffect(CONST_ME_YALAHARIGHOST)
+        position:sendMagicEffect(CONST_ME_AVATAR_APPEAR)
     else
         player:sendTextMessage(MESSAGE_HOTKEY_PRESSED, "You are visible again.")
         position:sendMagicEffect(CONST_ME_AVATAR_APPEAR)

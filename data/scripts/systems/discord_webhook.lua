@@ -1,15 +1,14 @@
 -- Sends Discord webhook notifications.
 -- The URL layout is https://discord.com/api/webhooks/:id/:token
 -- Leave empty if you wish to disable.
-
 if not announcementChannels then
-	announcementChannels = {
-		["serverAnnouncements"] = "server-announcements", -- Used for an announcement channel on your discord
-		["raids"] = "raids", -- Used to isolate raids on your discord
-		["player-kills"] = "player-kills", -- Self-explaining
-		["player-levels"] = "player-levels", -- Self-explaining
-		["reports"] = "reports",
-	}
+    announcementChannels = {
+        ["serverAnnouncements"] = "", -- Used for an announcement channel on your discord
+        ["raids"] = "", -- Used to isolate raids on your discord
+        ["player-kills"] = "", -- Self-explaining
+        ["player-levels"] = "", -- Self-explaining
+        ["reports"] = ""
+    }
 end
 
 --[[

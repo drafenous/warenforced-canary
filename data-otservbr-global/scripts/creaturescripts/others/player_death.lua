@@ -52,17 +52,6 @@ function playerDeath.onDeath(player, corpse, killer, mostDamageKiller, unjustifi
         mostDamageKiller:takeScreenshot(SCREENSHOT_TYPE_PLAYERKILL)
     end
 
-    db.query(
-        "INSERT INTO `player_deaths` (`player_id`, `time`, `level`, `killed_by`, `is_player`, `mostdamage_by`, `mostdamage_is_player`, `unjustified`, `mostdamage_unjustified`) VALUES (" ..
-            playerGuid .. ", " .. os.time() .. ", " .. player:getLevel() .. ", " .. db.escapeString(killerName) .. ", " ..
-            byPlayer .. ", " .. db.escapeString(mostDamageName) .. ", " .. byPlayerMostDamage .. ", " ..
-            (unjustified and 1 or 0) .. ", " .. (mostDamageUnjustified and 1 or 0) .. ")")
-    local resultId = db.storeQuery("SELECT `player_id` FROM `player_deaths` WHERE `player_id` = " .. playerGuid)
-    -- Start Webhook Player Death
-    Webhook.sendMessage(":skull_crossbones: " .. player:getMarkdownLink() .. " has died. Killed at level _" ..
-                            player:getLevel() .. "_ by **" .. killerName .. "**.", announcementChannels["player-kills"])
-    -- End Webhook Player Death
-
     local protectionLevel = getConfigInfo("protectionLevel")
     local hasBlessOfLife = 0
     if player:getLevel() > protectionLevel then

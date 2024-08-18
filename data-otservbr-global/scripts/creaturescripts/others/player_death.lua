@@ -2,9 +2,9 @@ local deathListEnabled = true
 
 local playerDeath = CreatureEvent("PlayerDeath")
 function playerDeath.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
-    if player:getStorageValue(Storage.SvargrondArena.PitDoor) > 0 then
-        player:setStorageValue(Storage.SvargrondArena.PitDoor, 0)
-    end
+	if player:getStorageValue(Storage.Quest.U8_0.BarbarianArena.PitDoor) > 0 then
+		player:setStorageValue(Storage.Quest.U8_0.BarbarianArena.PitDoor, 0)
+	end
 
     if not deathListEnabled then
         return
@@ -59,7 +59,6 @@ function playerDeath.onDeath(player, corpse, killer, mostDamageKiller, unjustifi
             hasBlessOfLife = 1
         end
     end
-    logger.info("hasBlessing 9: {}", hasBlessOfLife)
 
     db.query(
         "INSERT INTO `player_deaths` (`player_id`, `time`, `level`, `killed_by`, `is_player`, `mostdamage_by`, `mostdamage_is_player`, `unjustified`, `mostdamage_unjustified`, `playerWasRevived`) VALUES (" ..

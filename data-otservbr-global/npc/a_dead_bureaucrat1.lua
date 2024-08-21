@@ -53,6 +53,7 @@ npcType.onCloseChannel = function(npc, creature)
 end
 
 local config = {
+	[VOCATION.BASE_ID.NONE] = "sword",
 	[VOCATION.BASE_ID.SORCERER] = "wand",
 	[VOCATION.BASE_ID.DRUID] = "rod",
 	[VOCATION.BASE_ID.PALADIN] = "bow",

@@ -12,7 +12,7 @@ function voodooOfLife.onUse(player, item, fromPosition, target, toPosition, isHo
 
     if target:getGroup():getId() ~= GROUP_TYPE_NONE then
         if isMyself then
-            player:sendCancelMessage("Your're not dead.")
+            player:sendCancelMessage("You're not dead.")
         else
             player:sendCancelMessage(target:getName() .. " is not dead.")
         end

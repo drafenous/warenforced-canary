@@ -143,8 +143,12 @@ Blessings.sendBlessDialog = function(player)
 
     local totalBlessOfLife = player:getBlessingCount(9)
 
-    player:sendTextMessage(MESSAGE_GAME_HIGHLIGHT,
-        "You have a total " .. totalBlessOfLife .. " of Bless of Life remaining.")
+    if totalBlessOfLife > 0 then
+        player:sendTextMessage(MESSAGE_ADMINISTRATOR,
+            "You have a total " .. totalBlessOfLife .. " of Bless of Life remaining.")
+    else
+        player:sendTextMessage(MESSAGE_ADMINISTRATOR, "You're not protected by any Bless of Life.")
+    end
 
     local promotion = (player:isPremium() and player:isPromoted()) and 30 or 0
     local PvPminXPLoss = Blessings.LossPercent[#curBless].skill + promotion

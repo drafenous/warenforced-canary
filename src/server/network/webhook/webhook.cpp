@@ -62,7 +62,6 @@ void Webhook::sendMessage(const std::string &title, const std::string &message, 
 }
 
 void Webhook::sendMessage(const std::string &message, std::string url) {
-	g_logger().debug(url);
 	if (url.empty()) {
 		url = g_configManager().getString(DISCORD_WEBHOOK_URL, __FUNCTION__);
 	}

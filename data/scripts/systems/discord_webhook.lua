@@ -3,11 +3,11 @@
 -- Leave empty if you wish to disable.
 if not announcementChannels then
     announcementChannels = {
-        ["serverAnnouncements"] = configKeys.DISCORD_WEBHOOK_URL, -- Used for an announcement channel on your discord
-        ["raids"] = configKeys.DISCORD_RAIDS_WEBHOOK_URL, -- Used to isolate raids on your discord
-        ["player-kills"] = configKeys.DISCORD_PLAYER_KILLS_WEBHOOK_URL, -- Self-explaining
-        ["player-levels"] = configKeys.DISCORD_PLAYER_LEVELS_WEBHOOK_URL, -- Self-explaining
-        ["reports"] = configKeys.DISCORD_REPORTS_WEBHOOK_URL
+        ["serverAnnouncements"] = configManager.getString(configKeys.DISCORD_WEBHOOK_URL), -- Used for an announcement channel on your discord
+        ["raids"] = configManager.getString(configKeys.DISCORD_RAIDS_WEBHOOK_URL), -- Used to isolate raids on your discord
+        ["player-kills"] = configManager.getString(configKeys.DISCORD_PLAYER_KILLS_WEBHOOK_URL), -- Self-explaining
+        ["player-levels"] = configManager.getString(configKeys.DISCORD_PLAYER_LEVELS_WEBHOOK_URL), -- Self-explaining
+        ["reports"] = configManager.getString(configKeys.DISCORD_REPORTS_WEBHOOK_URL)
     }
 end
 

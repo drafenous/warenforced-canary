@@ -349,6 +349,10 @@ bool ConfigManager::load() {
 	loadStringConfig(L, DATA_DIRECTORY, "dataPackDirectory", "data-otservbr-global");
 	loadStringConfig(L, DEFAULT_PRIORITY, "defaultPriority", "high");
 	loadStringConfig(L, DISCORD_WEBHOOK_URL, "discordWebhookURL", "");
+	loadStringConfig(L, DISCORD_RAIDS_WEBHOOK_URL, "discordRaidsWebhookURL", "");
+	loadStringConfig(L, DISCORD_PLAYER_KILLS_WEBHOOK_URL, "discordPlayerKillsWebhookURL", "");
+	loadStringConfig(L, DISCORD_PLAYER_LEVELS_WEBHOOK_URL, "discordPlayerLevelsWebhookURL", "");
+	loadStringConfig(L, DISCORD_REPORTS_WEBHOOK_URL, "discordReportsWebhookURL", "");
 	loadStringConfig(L, FORGE_FIENDISH_INTERVAL_TIME, "forgeFiendishIntervalTime", "1");
 	loadStringConfig(L, FORGE_FIENDISH_INTERVAL_TYPE, "forgeFiendishIntervalType", "hour");
 	loadStringConfig(L, GLOBAL_SERVER_SAVE_TIME, "globalServerSaveTime", "06:00");

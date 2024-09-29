@@ -327,7 +327,7 @@ bool AnnounceEvent::configureRaidEvent(const pugi::xml_node &eventNode) {
 
 bool AnnounceEvent::executeEvent() {
 	g_game().broadcastMessage(message, messageType);
-	g_webhook().sendMessage(fmt::format(":space_invader: {}", message));
+	g_webhook().sendMessage(fmt::format(":space_invader: {}", message), DISCORD_RAIDS_WEBHOOK_URL);
 	return true;
 }
 

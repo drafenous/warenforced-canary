@@ -8,7 +8,7 @@
  */
 
 #include "pch.hpp"
-
+#include "config/configmanager.hpp"
 #include "lua/creature/raids.hpp"
 #include "utils/pugicast.hpp"
 #include "game/game.hpp"
